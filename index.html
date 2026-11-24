@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Momo si Kucing Angka</title>
+<meta name="description" content="Jalan-jalan bareng Momo si kucing, kumpulkan ikan dengan menjawab soal angka, lalu belanja aksesori keren!">
+<meta name="theme-color" content="#ff9f43">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐱</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+<!-- 0. Masuk / daftar -->
+<section id="s0" class="s on login">
+  <div class="logo">🐱</div>
+  <h1>Momo si Kucing Angka</h1>
+  <p class="sub">Halo! Aku Momo. Siapa namamu?</p>
+  <button id="cont" class="big-btn" style="display:none"></button>
+  <div class="form">
+    <input id="nm" maxlength="14" placeholder="Ketik namamu" autocomplete="off">
+    <input id="pin" maxlength="4" inputmode="numeric" pattern="[0-9]*" type="password" placeholder="PIN 4 angka" autocomplete="off">
+    <div class="row">
+      <button id="bLogin">Masuk</button>
+      <button id="bReg" class="alt">Daftar baru</button>
+    </div>
+  </div>
+  <div id="er" class="msg"></div>
+  <div id="loading" class="msg soft">Menyambung ke server…</div>
+  <div id="ul" class="row"></div>
+  <p class="note">☁️ Ikan & aksesorimu tersimpan di server, jadi bisa main dari HP mana saja pakai nama + PIN yang sama.</p>
+</section>
+
+<!-- 1. Peta 3D -->
+<section id="s1" class="s world">
+  <div id="w"></div>
+  <div class="hud tl">
+    <div class="pill"><span>🐱</span><b id="hiName"></b></div>
+    <div class="pill fish"><span>🐟</span><b id="fish">0</b></div>
+  </div>
+  <canvas id="mm" width="132" height="132" class="hud tr"></canvas>
+  <div class="hud bl">
+    <div class="tip">Ketuk tanah buat jalan · geser buat putar kamera<br>Masuk lewat lingkaran hijau di depan pintu!</div>
+    <div id="places" class="places"></div>
+    <button id="bOut" class="small">Ganti pemain</button>
+  </div>
+  <button id="bJump" class="hud br jump" aria-label="Lompat">⤒<small>Lompat</small></button>
+</section>
+
+<!-- 2. Permainan angka -->
+<section id="s2" class="s game">
+  <div class="top"><button id="gBack" class="small">⬅ Peta</button><b id="gt"></b><span></span></div>
+  <div id="q" class="q"></div>
+  <div id="dots" class="dots"></div>
+  <div id="area"></div>
+  <div id="m" class="msg"></div>
+</section>
+
+<!-- 3. Toko aksesori -->
+<section id="s3" class="s shop">
+  <div class="top"><button id="shopBack" class="small">⬅ Peta</button><b>🛍️ Toko Aksesori</b><span class="pill fish"><span>🐟</span><b id="sf">0</b></span></div>
+  <div class="pvwrap">
+    <div id="pv"></div>
+    <div class="pvbtns">
+      <button id="pvWalk" class="small"></button>
+      <button id="pvReset" class="small">↺ Gaya awal</button>
+    </div>
+    <div class="pvhint">geser untuk memutar</div>
+  </div>
+  <div id="tabs" class="tabs"></div>
+  <div id="grid" class="grid"></div>
+  <div id="sm" class="msg"></div>
+  <div id="act" class="act"></div>
+</section>
+
+<div id="toast" class="toast"></div>
+<script type="module" src="/js/main.js"></script>
+</body>
+</html>
