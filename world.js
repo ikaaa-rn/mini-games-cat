@@ -239,10 +239,8 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
   [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([sx, sz]) => {
     const len = HALF - ROAD;
     const mid = sz * (ROAD + len / 2);
-    // sepanjang jalan utara-selatan
     flat(SW, len, sideMat(len, true), sx * (ROAD + SW / 2), 0.06, mid, world);
     B(0.2, 0.14, len, curb, sx * (ROAD + 0.1), 0.07, mid, world, false);
-    // sepanjang jalan barat-timur
     const midx = sx * (ROAD + len / 2);
     flat(len, SW, sideMat(len, false), midx, 0.061, sz * (ROAD + SW / 2), world);
     B(len, 0.14, 0.2, curb, midx, 0.07, sz * (ROAD + 0.1), world, false);
@@ -336,7 +334,7 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
       const geo = new T.ExtrudeGeometry(s, { depth: d + 1, bevelEnabled: false });
       geo.translate(0, 0, -(d + 1) / 2);
       M(geo, rm, 0, h + 0.45, 0, g);
-      B(0.8, 1.6, 0.8, mat(0x8d6e63), 2.6, h + 2, -1.2, g); // cerobong
+      B(0.8, 1.6, 0.8, mat(0x8d6e63), 2.6, h + 2, -1.2, g);
     } else if (p.roof === "blocks") {
       B(w + 0.3, 0.5, d + 0.3, rm, 0, h + 0.7, 0, g);
       [[0xe74c3c, -2.5, -1], [0xf1c40f, -0.8, -1.4], [0x27ae60, 1.2, -0.8], [0x9b59b6, 2.9, -1.6], [0xe67e22, -1.6, 1]].forEach(([c, x, z], k) => {
@@ -422,11 +420,9 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
     B(1.4, 2.3, 0.15, wood, 0, 1.15, d / 2 + 0.05, g, false);
     windowAt(g, -2.2, 2, d / 2 + 0.05, 1.3, 1.1);
     windowAt(g, 2.2, 2, d / 2 + 0.05, 1.3, 1.1);
-    // pagar kayu depan
     for (let k = -4; k <= 4; k++) if (Math.abs(k) > 0) B(0.18, 0.9, 0.18, white, k * 0.9, 0.45, d / 2 + 2.4, g);
     B(3.4, 0.14, 0.1, white, -2.3, 0.65, d / 2 + 2.4, g, false);
     B(3.4, 0.14, 0.1, white, 2.3, 0.65, d / 2 + 2.4, g, false);
-    // kotak bunga
     [-2.2, 2.2].forEach((fx) => {
       B(1.5, 0.3, 0.4, wood, fx, 1.2, d / 2 + 0.25, g, false);
       for (let f = 0; f < 4; f++) B(0.2, 0.2, 0.2, mat([0xff6b81, 0xffd43b, 0xffffff, 0xa29bfe][f]), fx - 0.55 + f * 0.37, 1.45, d / 2 + 0.25, g, false);
@@ -446,7 +442,6 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
     const rim = M(new T.TorusGeometry(5, 0.35, 6, 32), stone, px, 0.1, pz, world);
     rim.rotation.x = Math.PI / 2;
     addCircle(px, pz, 5.2);
-    // bebek
     for (let k = 0; k < 3; k++) {
       const dk = new T.Group();
       dk.position.set(px + Math.cos(k * 2) * 2.5, 0.2, pz + Math.sin(k * 2) * 2.5);
@@ -457,22 +452,18 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
       world.add(dk);
       ducks.push(dk);
     }
-    // jembatan kecil
     B(1.8, 0.2, 3, wood, px + 5, 0.35, pz, world);
   }
   {
-    // taman bermain
     const gx = 30, gz = -32;
     const sand = flat(12, 10, mat(0xf3d9a4, { roughness: 1 }), gx, 0.04, gz, world);
     sand.receiveShadow = true;
-    // perosotan
     B(0.3, 3, 0.3, mat(0xe74c3c), gx - 3, 1.5, gz - 2, world);
     B(0.3, 3, 0.3, mat(0xe74c3c), gx - 1.6, 1.5, gz - 2, world);
     B(1.8, 0.2, 1.6, mat(0x3498db), gx - 2.3, 3, gz - 2, world);
     const sl = B(1.4, 0.15, 4, mat(0xf1c40f), gx - 2.3, 1.6, gz + 0.6, world);
     sl.rotation.x = 0.7;
     addBox(gx - 3.4, gx - 1.2, gz - 2.6, gz + 2.4);
-    // ayunan
     B(0.2, 3, 0.2, mat(0x2ecc71), gx + 1.5, 1.5, gz - 1, world);
     B(0.2, 3, 0.2, mat(0x2ecc71), gx + 4.5, 1.5, gz - 1, world);
     B(3.2, 0.2, 0.2, mat(0x2ecc71), gx + 3, 3, gz - 1, world);
@@ -678,7 +669,6 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
           const d = Math.hypot(dx, dz);
           if (d < r) {
             if (d < 1e-4) {
-              // di dalam kotak: dorong keluar lewat sisi terdekat
               const opts = [[c.b[0] - r - p.x, 0], [c.b[1] + r - p.x, 0], [0, c.b[2] - r - p.z], [0, c.b[3] + r - p.z]];
               opts.sort((a, b) => Math.abs(a[0] + a[1]) - Math.abs(b[0] + b[1]));
               p.x += opts[0][0];
@@ -721,6 +711,41 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
   let target = null, vy = 0, py = 0, speedNow = 0;
   let yaw = 0.35, pitch = 0.5, dist = 13;
   const keys = {};
+
+  // kontrol analog joystick
+  const joy = { x: 0, y: 0, id: null };
+  const joyEl = document.getElementById("joy");
+  const knobEl = document.getElementById("joyKnob");
+  if (joyEl && knobEl) {
+    const updateJoy = (cx, cy) => {
+      const r = joyEl.getBoundingClientRect();
+      const maxR = r.width / 2 - 20;
+      let dx = cx - (r.left + r.width / 2);
+      let dy = cy - (r.top + r.height / 2);
+      const d = Math.hypot(dx, dy);
+      if (d > maxR) { dx = (dx / d) * maxR; dy = (dy / d) * maxR; }
+      knobEl.style.transform = `translate(${dx}px, ${dy}px)`;
+      joy.x = dx / maxR;
+      joy.y = dy / maxR;
+    };
+    joyEl.addEventListener("pointerdown", (e) => {
+      e.stopPropagation();
+      joy.id = e.pointerId;
+      joyEl.setPointerCapture(e.pointerId);
+      updateJoy(e.clientX, e.clientY);
+    });
+    joyEl.addEventListener("pointermove", (e) => {
+      if (e.pointerId === joy.id) updateJoy(e.clientX, e.clientY);
+    });
+    const resetJoy = (e) => {
+      if (e.pointerId !== joy.id) return;
+      joy.id = null; joy.x = 0; joy.y = 0;
+      knobEl.style.transform = "translate(0px, 0px)";
+    };
+    joyEl.addEventListener("pointerup", resetJoy);
+    joyEl.addEventListener("pointercancel", resetJoy);
+  }
+
   let busy = false, lock = -1, active = true;
   const camPos = new T.Vector3(0, 8, 18);
   const ptrs = new Map();
@@ -856,6 +881,10 @@ export function createWorld(el, { onEnter, onFish, minimap }) {
     if (keys.s || keys.arrowdown) move.sub(fwd);
     if (keys.d || keys.arrowright) move.add(right);
     if (keys.a || keys.arrowleft) move.sub(right);
+    if (Math.hypot(joy.x, joy.y) > 0.1) {
+      move.addScaledVector(fwd, -joy.y);
+      move.addScaledVector(right, joy.x);
+    }
     if (move.lengthSq() > 0) target = null;
     else if (target) {
       move.set(target.x - player.position.x, 0, target.z - player.position.z);
